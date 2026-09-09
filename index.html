@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Diary of a Young Girl — Class Audio</title>
+<style>
+  :root {
+    --paper: #f4f0e6;
+    --ink: #2b2620;
+    --ink-soft: #6b6255;
+    --rule: #d8cfbd;
+    --accent: #7a3b2e;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: Georgia, "Iowan Old Style", "Palatino Linotype", serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 32px 20px;
+  }
+
+  main {
+    width: 100%;
+    max-width: 560px;
+  }
+
+  .masthead {
+    border-bottom: 1px solid var(--rule);
+    padding-bottom: 20px;
+    margin-bottom: 28px;
+  }
+
+  .masthead p {
+    margin: 0 0 6px;
+    font-size: 13px;
+    letter-spacing: 0.03em;
+    color: var(--ink-soft);
+  }
+
+  h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: normal;
+    line-height: 1.25;
+  }
+
+  .chapter-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  #chapter-label {
+    font-size: 16px;
+    color: var(--ink);
+  }
+
+  #chapter-select {
+    font-family: inherit;
+    font-size: 14px;
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 6px 8px;
+  }
+
+  .player-frame {
+    background: #fffdf9;
+    border: 1px solid var(--rule);
+    border-radius: 6px;
+    padding: 24px;
+  }
+
+  audio {
+    width: 100%;
+    display: block;
+  }
+
+  .speed-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 18px;
+    padding-top: 18px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .speed-row span {
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+
+  .speed-btn {
+    font-family: inherit;
+    font-size: 13px;
+    color: var(--ink);
+    background: transparent;
+    border: 1px solid var(--rule);
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
+
+  .speed-btn:hover {
+    border-color: var(--accent);
+  }
+
+  .speed-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--paper);
+  }
+
+  footer {
+    margin-top: 22px;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    line-height: 1.5;
+  }
+</style>
+</head>
+<body>
+<main>
+  <div class="masthead">
+    <p>Core 1 Humanities — Class Listening</p>
+    <h1>The Diary of a Young Girl</h1>
+  </div>
+
+  <div class="chapter-row">
+    <span id="chapter-label">Select a section to play</span>
+    <select id="chapter-select"></select>
+  </div>
+
+  <div class="player-frame">
+    <audio id="player" controls preload="metadata"></audio>
+
+    <div class="speed-row">
+      <span>Speed:</span>
+      <button class="speed-btn" data-speed="0.75">0.75x</button>
+      <button class="speed-btn active" data-speed="1">1x</button>
+      <button class="speed-btn" data-speed="1.25">1.25x</button>
+      <button class="speed-btn" data-speed="1.5">1.5x</button>
+      <button class="speed-btn" data-speed="2">2x</button>
+    </div>
+  </div>
+
+  <footer>
+    Brought to you by MD Humanities
+  </footer>
+</main>
+
+<script>
+  // Add one entry per audio file you upload to this repo.
+  // "file" must match the exact filename you uploaded.
+  const chapters = [
+    { label: "Diary", file: "AF D.mp3" },
+  ];
+
+  const select = document.getElementById("chapter-select");
+  const player = document.getElementById("player");
+  const label = document.getElementById("chapter-label");
+
+  chapters.forEach((ch, i) => {
+    const opt = document.createElement("option");
+    opt.value = i;
+    opt.textContent = ch.label;
+    select.appendChild(opt);
+  });
+
+  function loadChapter(i) {
+    player.src = chapters[i].file;
+    label.textContent = chapters[i].label;
+  }
+
+  select.addEventListener("change", () => loadChapter(select.value));
+  loadChapter(0);
+
+  document.querySelectorAll(".speed-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const speed = parseFloat(btn.dataset.speed);
+      player.playbackRate = speed;
+      document.querySelectorAll(".speed-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+    });
+  });
+</script>
+</body>
+</html>
