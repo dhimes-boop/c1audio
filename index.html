@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>Diary of a Young Girl — Class Audio</title>
+<title>Diary of a Young Girl — MD Humanities</title>
 <style>
   :root {
     --paper: #f4f0e6;
@@ -51,29 +51,6 @@
     font-size: 28px;
     font-weight: normal;
     line-height: 1.25;
-  }
-
-  .chapter-row {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 16px;
-  }
-
-  #chapter-label {
-    font-size: 16px;
-    color: var(--ink);
-  }
-
-  #chapter-select {
-    font-family: inherit;
-    font-size: 14px;
-    color: var(--ink);
-    background: transparent;
-    border: 1px solid var(--rule);
-    border-radius: 4px;
-    padding: 6px 8px;
   }
 
   .player-frame {
@@ -138,13 +115,8 @@
     <h1>The Diary of a Young Girl</h1>
   </div>
 
-  <div class="chapter-row">
-    <span id="chapter-label">Select a section to play</span>
-    <select id="chapter-select"></select>
-  </div>
-
   <div class="player-frame">
-    <audio id="player" controls preload="metadata"></audio>
+    <audio id="player" controls preload="metadata" src="https://pub-37ba1f34140b4481904b9433e1af4245.r2.dev/AFD%20small.mp3"></audio>
 
     <div class="speed-row">
       <span>Speed:</span>
@@ -157,35 +129,12 @@
   </div>
 
   <footer>
-    Brought to you by MD Humanities
+    Brought to you by the bald geniuses at MD Humanities.
   </footer>
 </main>
 
 <script>
-  // Add one entry per audio file you upload to this repo.
-  // "file" must match the exact filename you uploaded.
-  const chapters = [
-    { label: "Diary", file: "AF D.mp3" },
-  ];
-
-  const select = document.getElementById("chapter-select");
   const player = document.getElementById("player");
-  const label = document.getElementById("chapter-label");
-
-  chapters.forEach((ch, i) => {
-    const opt = document.createElement("option");
-    opt.value = i;
-    opt.textContent = ch.label;
-    select.appendChild(opt);
-  });
-
-  function loadChapter(i) {
-    player.src = chapters[i].file;
-    label.textContent = chapters[i].label;
-  }
-
-  select.addEventListener("change", () => loadChapter(select.value));
-  loadChapter(0);
 
   document.querySelectorAll(".speed-btn").forEach(btn => {
     btn.addEventListener("click", () => {
